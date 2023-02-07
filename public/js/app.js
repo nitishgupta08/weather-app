@@ -1,4 +1,3 @@
-console.log("Client side js");
 const units = { m: "°C", s: "K", f: "°F" };
 
 const weatherForm = document.querySelector("form");
