@@ -13,31 +13,30 @@ weatherForm.addEventListener("submit", (e) => {
   errorMessage.textContent = "Loading...";
   const location = searchTerm.value;
   const unit = unitTerm.value;
-  fetch(`http://localhost:3000/weather?address=${location}&unit=${unit}`).then(
-    (res) => {
-      res.json().then((data) => {
-        if (data.error) {
-          errorMessage.innerHTML = `
+  fetch(`/weather?address=${location}&unit=${unit}`).then((res) => {
+    res.json().then((data) => {
+      if (data.error) {
+        errorMessage.innerHTML = `
          <h2>${data.error}</h2>
         `;
-        } else {
-          errorMessage.textContent = "";
-          const successMessage = document.createElement("div");
-          successMessage.id = "success";
+      } else {
+        errorMessage.textContent = "";
+        const successMessage = document.createElement("div");
+        successMessage.id = "success";
 
-          successMessage.innerHTML = `   
+        successMessage.innerHTML = `   
         <div>
            <h1>${data.weatherData.temperature}${units[data.unit]}</h1>
            <p>Feels like <strong>${data.weatherData.feelslike}${
-            units[data.unit]
-          }</strong></p>
+          units[data.unit]
+        }</strong></p>
         </div>
         
         <div class="side">
           <div>
             <h2>${data.location.name}, ${data.location.region}, ${
-            data.location.country
-          } 
+          data.location.country
+        } 
             </h2>
             <p>Weather condition is <strong>${
               data.weatherData.weather_descriptions[0]
@@ -116,8 +115,8 @@ c46 46 46 86 0 132 l-34 34 -296 0 -296 0 -32 -29z"/>
                 <svg 
                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>windsock</title><path d="M7 5V13L22 11V7L7 5M10 6.91L13 7.31V10.69L10 11.09V6.91M16 7.71L19 8.11V9.89L16 10.29V7.71M5 10V11H6V12H5V21H3V4C3 3.45 3.45 3 4 3S5 3.45 5 4V6H6V7H5V10Z" /></svg>
                 <p>${data.weatherData.wind_degree}° ${
-            data.weatherData.wind_dir
-          }</p>
+          data.weatherData.wind_dir
+        }</p>
             </div>
             
             <div class="data">
@@ -163,24 +162,21 @@ c46 46 46 86 0 132 l-34 34 -296 0 -296 0 -32 -29z"/>
           </div>   
         </div>  
       `;
-          document.querySelector(".main-content").appendChild(successMessage);
-          console.log(document.querySelectorAll(".data svg"));
-          if (data.weatherData.is_day === "no") {
-            document.querySelector("#success").style.backgroundColor =
-              "#1d1f2f";
-            document.querySelector("#success").style.color = "white";
-            document.querySelectorAll(".data svg").forEach((item) => {
-              item.style.fill = "white";
-            });
-          } else {
-            document.querySelector("#success").style.backgroundColor =
-              "#fcd14d";
-            document.querySelectorAll(".data svg").forEach((item) => {
-              item.style.fill = "black";
-            });
-          }
+        document.querySelector(".main-content").appendChild(successMessage);
+        console.log(document.querySelectorAll(".data svg"));
+        if (data.weatherData.is_day === "no") {
+          document.querySelector("#success").style.backgroundColor = "#1d1f2f";
+          document.querySelector("#success").style.color = "white";
+          document.querySelectorAll(".data svg").forEach((item) => {
+            item.style.fill = "white";
+          });
+        } else {
+          document.querySelector("#success").style.backgroundColor = "#fcd14d";
+          document.querySelectorAll(".data svg").forEach((item) => {
+            item.style.fill = "black";
+          });
         }
-      });
-    }
-  );
+      }
+    });
+  });
 });
